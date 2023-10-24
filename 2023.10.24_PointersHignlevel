@@ -1,0 +1,34 @@
+int main() {
+	char* p = "abcefg";//将字符串的首地址存入指针p，这块空间由系统分配至只读区域
+	printf("%s\n", p);
+}
+
+//字符指针举例
+int main() {
+	const char *p1 = "abcdef";//abcdef 定义出来之后相当于是个常量字符串，放在只读数据区
+	const char *p2 = "abcdef";//p1与p2都是指向这个常量字符串的首地址。这个空间已经确定了，所以指向的区域也是相同的
+	char arr1[] = "abcdef";//开辟一块区域存放这个字符串
+	char arr2[] = "abcdef";//开辟另一块区域存放这个字符串
+	if (p1 == p2)
+		printf("p1==p2\n");
+	else
+		printf("p1!=p2\n");
+	if (arr1 == arr2)
+		printf("arr1==arr2\n");
+	else
+		printf("arr1!=arr2\n");//这两个新开辟的区域的首地址不同
+}
+//指针数组
+int main() {
+	int arr1[] = {1, 2, 3, 4, 5};
+	int arr2[] = {2, 3, 4, 5, 6};
+	int arr3[] = {3, 4, 5, 6, 7};
+	int *parr[3] = {arr1, arr2, arr3};
+	int i, j;
+	for (i = 0; i < 3; i++) {
+		for (j = 0; j < 5; j++)
+			printf("%d ", parr[i][j]);//parr[i]是arr1,arr2,arr3就是parr中的元素，他们相当于是每个数组的首地址，然后parr[i][j]就是以首地址向后取数，这就形成了二维数组
+		printf("\n");
+	}
+}
+
