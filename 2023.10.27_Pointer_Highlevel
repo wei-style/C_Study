@@ -1,0 +1,181 @@
+#include "stdio.h"
+
+//int main()
+//{
+//	int a[] = { 1,2,3,4 };
+//	printf("%d\n", sizeof(a));//16
+//	printf("%d\n", sizeof(a+0));//4 4+0不是单独的整个数组了，而是首元素的地址+0=首元素的地址
+//	//只有a单独放在sizeof内部时才表示整个数组
+//	printf("%d\n", sizeof(*a));//4 解引用取出了首元素a[0]
+//	printf("%d\n", sizeof(a+1));//4 a+1是第二个元素的地址，步长为4个字节，这里的a是首元素的地址
+//	printf("%d\n", sizeof(a[1]));//4 
+//	printf("%d\n", sizeof(&a));//4 取出了数组的地址，大小依然是四个字节
+//	printf("%d\n", sizeof(&a+1));//4 &a是数组的地址，&a+1是跳过整个数组指向数组末尾后面的下一位，但依然是地址
+//	printf("%d\n", sizeof(*&a));//&a取出的是整个数组的地址，*&a就是取出这个数组，这里相当于是a
+//	printf("%d\n", sizeof(&a[0]));//4
+//	printf("%d\n", sizeof(&a[0]+1));//4，是第二个元素的地址
+//	//地址的加减是按照步长来的，不是直接在值上加一减一
+//}
+//只要sizeof里面不是单纯的数组名，那这个书数组名就不代表整个数组，而是表示数组首地址
+//int main()
+//{
+//	char arr[] = { 'a','b','c','d','e','f' };
+//	printf("%d\n", sizeof(arr));//6 6个char就是6个字节
+//	printf("%d\n", sizeof(arr+0));//4 arr在这里表示首元素的地址，+0表示步进0个字节
+//	printf("%d\n", sizeof(*arr));//1 取出第一个元素，也就是'a'的大小
+//	printf("%d\n", sizeof(arr[1]));//1 'b'的大小
+//	printf("%d\n", sizeof(&arr));//4 数组的地址，地址的大小是4个字节
+//	printf("%d\n", sizeof(&arr+1));//4 数组的地址向后步进整个数组长度
+//	printf("%d\n", sizeof(&arr[0]+1));//4 'b'的地址，地址大小为4个字节
+//}
+#include "string.h"
+//int main()
+//{
+//	char arr[] = { 'a','b','c','d','e','f' };
+//	printf("%d\n", strlen(arr));//随机 没有\0，strlen不会停止，直到遇到\0所以是随机值
+//	printf("%d\n", strlen(arr + 0));//随机 从arr首地址向后计算，直到遇到\0，所以也是随机值
+//	printf("%d\n", strlen(*arr));// 非法，*arr是取到'a'的值，ASC码值是97，将97当作地址是不允许的，这是个野指针
+//	printf("%d\n", strlen(arr[1]));// 非法 arr[1]是'b'的值，ASC码值是98，也是个野指针
+//	printf("%d\n", strlen(&arr));// 随机值
+//	printf("%d\n", strlen(&arr + 1));// 随机值-6
+//	printf("%d\n", strlen(&arr[0] + 1));// 随机值-1
+//}
+
+//int main()
+//{
+//	char arr[] = "abcdef";
+//	printf("%d\n", sizeof(arr));//7 六个字符加上一个\0
+//	printf("%d\n", sizeof(arr+0));//1 a的大小
+//	printf("%d\n", sizeof(*arr));//1 a的大小
+//	printf("%d\n", sizeof(arr[1]));//1 b的大小
+//	printf("%d\n", sizeof(&arr));//4 数组的地址，地址的大小是4个字节
+//	printf("%d\n", sizeof(&arr+1));//4 数组的地址向后步进整个数组长度
+//	printf("%d\n", sizeof(&arr[0]+1));//4 'b'的地址，地址大小为4个字节
+//}
+
+
+//int main()
+//{
+//	char arr[] = "abcdef";
+//	printf("%d\n", strlen(arr));//6
+//	printf("%d\n", strlen(arr + 0));//6
+////	printf("%d\n", strlen(*arr));// 非法，*arr是取到'a'的值，ASC码值是97，将97当作地址是不允许的，这是个野指针
+////	printf("%d\n", strlen(arr[1]));// 非法 arr[1]是'b'的值，ASC码值是98，也是个野指针
+//	printf("%d\n", strlen(&arr));//6
+//	printf("%d\n", strlen(&arr + 1));// 随机值
+//	printf("%d\n", strlen(&arr[0] + 1));// 5
+//}
+
+//int main()
+//{
+//
+//	char* p= "abcdef";//将a的地址给了p
+//	/*等价为：char arr[]="abcdef";
+//	char *p;
+//	p=arr[];*/ 
+//
+//
+//	printf("%d\n", sizeof(p));//4 指针的大小都是4或者8个字节
+//	printf("%d\n", sizeof(p+1));//4 b的大小
+//	printf("%d\n", sizeof(*p));//1 这是a的大小
+//	printf("%d\n", sizeof(p[0]));// 1 这是a的大小,p[0]等价于*(p+0)
+//	printf("%d\n", sizeof(&p));// 4 指针的地址也是四个字节或者八个字节
+//	printf("%d\n", sizeof(&p+1));// 4 依然是地址
+//	printf("%d\n", sizeof(&p[0]+1));//4 依然是地址
+//
+//
+//	printf("%d\n", strlen(p));//6 p是字符串的首地址
+//	printf("%d\n", strlen(p+1));//5
+////	printf("%d\n", strlen(*p));//非法,*p是将a传入了strlen，a的ASC码值是96，对于strlen来说是野指针
+////	printf("%d\n", strlen(p[0]));// 非法传入的是a
+//	printf("%d\n", strlen(&p));//随机值，p的地址是不可知的，不知道什么时候遇到\0
+//	printf("%d\n", strlen(&p + 1));//随机值且与&p没有关系
+//	printf("%d\n", strlen(&p[0] + 1));//5 p[0]是a，&a+1就是b的地址
+//}
+
+//int main()
+//{
+//	int a[3][4] = { 0 };
+//	//二维数组的步进依然是根据数组类型来的，只有数组指针的步进大小是数组长度
+//	printf("%d\n", sizeof(a));//48
+//	printf("%d\n", sizeof(a[0][0]));//4
+//	printf("%d\n", sizeof(a[0]));//16 第一个一维数组的大小，相当于传入第一个数组的数组名,数组名单独传入sizeof时计算的是这个数组的大小
+//	printf("%d\n", sizeof(a[0]+1));//4 这里不是单独的数组名，a[0]在这里相当于第一行第一个元素的地址，然后向后步进4个字节
+//	printf("%d\n", sizeof(*(a[0] + 1)));//4 a[0]+1是a[0][1]的地址
+//	printf("%d\n", sizeof(a+1));//4 a是二维数组名，在这里不是单独存在，所以看作第一行的地址，a+1是第二行的地址，是地址就是4个字节
+//	printf("%d\n", sizeof(*(a + 1)));//16 对第二行的地址解引用，得到的是第二行整个数组，相当于a[1]
+//	printf("%d\n", sizeof(&a[0]+1));//4 &a[0]是第一行的地址，&a[0]+1是第二行的地址，是地址就是四个字节
+//	printf("%d\n", sizeof(*(&a[0] + 1)));//16 第二个一维数组的大小
+//	printf("%d\n", sizeof(*a));//16 a没有单独放在sizeof内部那他就是第一行的地址，对第一行的地址解引用得到的就是第一行
+//	printf("%d\n", sizeof(a[3]));//16 sizeof计算的是变量类型的大小，不回去访问变量，这里可以写成sizeof(a[1])或者sizeof(a[2])
+//}
+//
+//int main()
+//{
+//	int a[5] = { 1,2,3,4,5 };
+//	int* ptr = (int*)(&a + 1);
+//	printf("%d,%d", *(a + 1), *(ptr - 1));//2,5
+//}
+//struct Test
+//{
+//	int Num;
+//	char* pcName;
+//	short sData;
+//	char cha[2];
+//	short sBa[4];
+//}*p=(struct Test*)0x100000;
+////假设p的值为0x100000，结构体类型的变量大小为20字节
+//int main()
+//{
+//	printf("%p\n", p + 0x1);//结构体指针+1是要跳过一个结构体，也就是0x100000+0x14（20字节）
+//	printf("%p\n", (unsigned long)p + 0x1);//将p的值转换为一个无符号长整型1048576，再加一，之后再变回来就是0x100001
+//	printf("%p\n", (unsigned int*)p + 0x1);//将p转换为一个指向无符号整型的指针，指针+1在这里就是步进4个字节0x100004
+//}
+//int main()
+//{
+//	int a[4] = { 1,2,3,4 };
+//	int* ptr1 = (int*)(&a + 1);
+//	int* ptr2 = (int*)((int)a + 1);
+//	printf("%x,%x", ptr1[-1], *ptr2);//4,2
+//}
+//
+//int main()
+//{
+//	int a[3][2] = { (0,1),(2,3),(4,5) };//{1,3,5}={1,3},{5,0},{0,0}
+//	int* p;
+//	p = a[0];
+//	printf("%d",p[0]);
+//}
+
+//int main()
+//{
+//	int a[5][5];
+//	int(*p)[4];//数组指针，这个指针指向有四个整形元素的数组p的类型是int(*)[4]，p+1一次跳过4个整形，16个字节
+//	//a是第一行的地址，a的类型是int(*)[5]，a+1一次跳过五个整形，20个字节
+//	p = a;
+//	printf("%p,%d\n", &p[4][2] - &a[4][2], &p[4][2] - &a[4][2]);
+//	//结果是0xFF_FF_FF_FC,-4
+////p[4][2]可以看作*(*(p+4)+2)
+//}
+
+
+//int main()
+//{
+//	char* a[] = { "work","at","alibaba" };//等价于a[]={&w,&a,&a};
+//	char** pa = a;//a[]里面的指针都是char*，要存放他们所以要用char**
+//	pa++;
+//	printf("%s\n", *pa);//at
+//
+//}
+
+int main()
+{
+	char* c[] = { "ENTER","NEW","POINTE","FIRST" };
+	char** cp[] = { c+3,c + 2,c + 1,c };
+	char*** cpp = cp;
+	printf("%s\n",**++cpp);//POINT
+	printf("%s\n", *-- * ++cpp + 3);//ER
+	printf("%s\n", *cpp[-2] + 3);//ST
+	printf("%s\n", cpp[-1][-1] + 1);//EW
+
+}
