@@ -1,0 +1,109 @@
+#include "stdio.h"
+#include "stddef.h"
+//struct Stu//定义一个结构体:学生Stu
+//{//学生的相关信息
+//	char name[20];
+//	int age;
+//};
+//int main()
+//{
+//	struct Stu s1;
+//	
+//}
+
+
+//struct
+//{
+//	char name[20];
+//	int age;
+//}s1;
+
+//struct Node
+//{
+//	int data;//数据域
+//	struct Node* next;//指针域
+//};
+
+//typedef struct node
+//{
+//	int data;
+//	struct node* next;
+//}node;
+
+//struct point
+//{
+//	int x;
+//	int y;
+//}p1//声明类型的同时定义变量p1;
+//struct point p2 = { 1，2 };//定义好类型后再定义变量，这个时候才有空间
+
+//struct score
+//{
+//	int n;
+//	char ch;
+//};
+//struct Stu//定义一个结构体:学生Stu
+//{//学生的相关信息
+//	char name[20];
+//	int age;
+//	struct score s;
+//};
+//struct Stu s1 = { “zhangsan”,20, {100,q} };
+
+//struct s1
+//{
+//	char c1;
+//	int i;
+//	char c2;
+//};
+//
+//struct s2
+//{
+//	char c1;
+//	char c2;
+//	int i;
+//};
+//
+//struct s3
+//{
+//	double d;
+//	char c;
+//	int i;
+//};
+//struct s4
+//{
+//	char c1;
+//	struct s3 s3;
+//	double d;
+//};
+//
+//int main()
+//{
+//	//printf("%d\n", sizeof(struct s1));
+//	//printf("%d\n", sizeof(struct s2));
+//	printf("%d\n", offsetof(struct s1, c1));
+//	printf("%d\n", offsetof(struct s1, i));
+//	printf("%d\n", offsetof(struct s1, c2));
+//}			
+
+
+struct S
+{
+	int data[1000];
+	int num;
+};
+void print1(struct S* ps)
+{
+	int i;
+	for (i = 0; i < 3; i++)
+	{
+		printf("%d ", ps->data[i]);
+	}
+	printf("%d ", ps->num);
+}
+int main()
+{
+
+	struct S s = { {1,2,3},100 };
+	print1(&s);
+}
