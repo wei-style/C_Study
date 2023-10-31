@@ -1,0 +1,86 @@
+struct A
+{
+	int _a : 2;//表示_a只占2个bit位
+	int _b : 5;
+	int _c : 10;
+	int _d : 30;
+};
+int main()
+{
+	printf("% d\n", sizeof (struct A));//输出8
+}
+
+
+struct S
+{
+	char a : 3;//开辟一个字节放入a，还剩5个bit
+	char b : 4;//4bit下的5个bit，还剩下1个bit
+	char c : 5;//剩下的1个bit放不下5bit，要再开辟一个字节，并且前面的1bit不再使用，将5bit放入新的一个字节中，还剩下3bit
+	char d : 4;//同理，会再开辟一个字节的空间放入4bit，还剩下4bit
+};
+int main()
+{
+	struct S s = { 0 };
+	printf("%d\n", sizeof(struct S));//输出3
+	s.a = 10;//10会被截断，只取低三位，010
+	s.b = 12;//12刚好4bit，存储为1100
+	s.c = 3;//开辟新的字节，存储为00011
+	s.d = 4;//开辟新的字节储存0100
+}
+
+contach.h
+#pragma once
+#include "stdio.h"
+#define Max 100
+typedef struct PeoInfo
+{
+	char name[20];
+	int age;
+	char sex[10];
+	char tele[12];
+	char addr[30];
+}PeoInfo,* LinkPeoInfo;
+
+typedef struct Contact
+{
+	PeoInfo data[Max];
+	int count;
+}contact;
+
+int InitContact(contact* C);
+int AddContact(contact* C);
+
+contact.c
+#include "contact.h"
+#include "string.h"
+int InitContact(contact* c)
+{
+	if (c == NULL)
+		return -1;
+	memset(c->data, 0, sizeof(c->data));
+	c->count = 0;
+	return 0;
+}
+int AddContact(contact* C)
+{
+	if (C == NULL)
+		return -1;
+	if (C->count == Max)
+	{
+		printf("通讯录已满，无法再添加\n");
+		return -1;
+	}
+
+	printf("请输入姓名：\n");
+	scanf("%s", (C->data + C->count)->name);
+	printf("请输入年龄：\n");
+	scanf("%d", &(C->data + C->count)->age);
+	printf("请输入性别：\n");
+	scanf("%s", (C->data + C->count)->sex);
+	printf("请输入电话号码：\n");
+	scanf("%s", (C->data + C->count)->tele);
+	printf("请输入住址：\n");
+	scanf("%s", (C->data + C->count)->addr);
+
+	C->count++;
+}
