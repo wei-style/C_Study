@@ -28,7 +28,11 @@ int main()
 	s.d = 4;//开辟新的字节储存0100
 }
 
-contach.h
+
+
+
+
+/***************contach.h*******************/
 #pragma once
 #include "stdio.h"
 #define Max 100
@@ -49,8 +53,17 @@ typedef struct Contact
 
 int InitContact(contact* C);
 int AddContact(contact* C);
+int ShowContact(contact* C);
+int DeleteContact(contact* C);
+int FindName(contact* C, char* name[]);
+void SearchContact(contact* C);
+void ModifyContact(contact* C);
 
-contact.c
+
+
+
+
+/***************contact.c*******************/
 #include "contact.h"
 #include "string.h"
 int InitContact(contact* c)
@@ -84,3 +97,98 @@ int AddContact(contact* C)
 
 	C->count++;
 }
+
+int ShowContact(contact* C)
+{
+	if (C == NULL)
+		return -1;
+	int i = 0;
+	printf("%20s\t%5s\%5s\t%12s\t%30s\n", "名字","年龄", "性别", "电话", "地址");
+	for (i = 0; i < C->count; i++)
+	{
+		printf("%20s\t%5d\%5s\t%12s\t%30s\n", C->data[i].name, C->data[i].age, C->data[i].sex, C->data[i].tele, C->data[i].addr);
+	}
+}
+
+int FindName(contact* C, char* name[])
+{
+	if (C == NULL)
+		return -1;
+	int i = 0;
+	for (i = 0; i < C->count; i++)
+	{
+		if(strcmp(C->data[i].name,name)==0)
+		{
+			return i;
+		}
+	}
+	return -1;
+}
+
+
+int DeleteContact(contact* C)
+{
+	if (C == NULL)
+		return -1;
+	char arr[20] = { 0 };
+	printf("请输入名字：");
+	scanf("%s", arr);
+	int ret = FindName(C, arr);
+	if (ret != -1)
+	{
+		int i;
+		for (i = ret; i < C->count - 1; i++)
+		{
+			C->data[i] = C->data[i + 1];
+		}
+		C->count--;
+}
+}
+void SearchContact(contact* C)
+{
+	if (C == NULL)
+		return -1;
+	char arr[20] = { 0 };
+	printf("请输入名字：");
+	scanf("%s", arr);
+	int ret = FindName(C, arr);
+	if (ret == -1)
+	{
+		printf("查找的人不存在\n");
+		return ;
+	}
+	printf("%20s\t%5s\%5s\t%12s\t%30s\n", "名字", "年龄", "性别", "电话", "地址");
+	printf("%20s\t%5d\%5s\t%12s\t%30s\n", C->data[ret].name, C->data[ret].age, C->data[ret].sex, C->data[ret].tele, C->data[ret].addr);
+	return;
+}
+
+void ModifyContact(contact* C)
+{
+	if (C == NULL)
+		return -1;
+	char arr[20] = { 0 };
+	printf("请输入要修改人的名字：");
+	scanf("%s", arr);
+	int ret = FindName(C, arr);
+	if (ret == -1)
+	{
+		printf("查修改的人不存在\n");
+		return;
+	}
+	printf("请输入姓名：\n");
+	scanf("%s", C->data[ret].name);
+	printf("请输入年龄：\n");
+	scanf("%d", &(C->data + ret)->age);
+	printf("请输入性别：\n");
+	scanf("%s", (C->data + ret)->sex);
+	printf("请输入电话号码：\n");
+	scanf("%s", (C->data + ret)->tele);
+	printf("请输入住址：\n");
+	scanf("%s", (C->data + ret)->addr);
+}
+
+
+
+
+
+	
