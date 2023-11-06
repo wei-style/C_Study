@@ -1,0 +1,113 @@
+//枚举
+#include "stdio.h"
+//enum Day
+//{
+//	Mon,
+//	Tues,
+//	Wed,
+//	Thur,
+//	Fri,
+//	Sat,
+//	Sun
+//};
+//int main()
+//{
+//	printf("%d\n", Mon);
+//	printf("%d\n", Tues);
+//	printf("%d\n", Wed);
+//	printf("%d\n", Thur);
+//	printf("%d\n", Fri);
+//	printf("%d\n", Sat);
+//	printf("%d\n", Sun);
+//	return 0;
+//}
+//联合
+#include "stdio.h"
+//union Un
+//{
+//	int a;
+//	char c;
+//};
+//int main()
+//{
+//	union Un u;
+//	printf("%d\n", sizeof u);
+//	printf("%p\n", &(u.a));
+//	printf("%p\n", &(u.c));
+//}
+//union Un
+//{
+//	char arr[5];
+//	int i;
+//};
+//int main()
+//{
+//	union Un u;
+//	printf("%d\n", sizeof u);
+//}
+//动态内存管理
+#include "stdio.h"
+#include "stdlib.h"
+#include "errno.h"
+#include "string.h"
+//int main()
+//{ 
+//	int arr[10] = { 0 };
+//	int* p = (int*)malloc(40);
+//	if (p == NULL)
+//	{
+//		printf("%s\n", strerror(errno));
+//		return -1;
+//	}
+//	//使用这块空间
+//	int i = 0;
+//	for (i = 0; i < 10; i++)
+//	{
+//		*(p + i) = i;
+//	}
+//	for (i = 0; i < 10; i++)
+//	{
+//		printf("%d ", *(p + i));
+//	}
+//	return 0;
+//}
+
+//int main()
+//{
+//	int* p=(int *)calloc(10, sizeof(int));
+//	if (p == NULL)
+//	{
+//		printf("%s\n", strerror(errno));
+//		return 1;
+//	}
+//	int i;
+//	for (i = 0; i < 10; i++)
+//	{
+//		printf("%d ", *(p + i));
+//	}
+//	return 0;
+//}
+int main()
+{
+	int* p = (int* p)malloc(40);
+	if (p == NULL)
+	{
+		printf("%s\n", strerror(errno));
+		return -1;
+	}
+	int i = 0;
+	for (i = 0; i < 10; i++)
+	{
+		*(p + i) = i;
+	}
+	//扩容
+	int* ptr=(int*)realloc(p, 80);
+	if (ptr != NULL)
+	{
+		p = ptr;
+	}
+	for (i = 0; i < 10; i++)
+	{
+		printf("%d ", *(p + i));
+	}
+}
